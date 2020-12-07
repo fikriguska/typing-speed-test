@@ -2,19 +2,20 @@
 #include <stdlib.h>
 #include <string.h>
 #include "tstfunc.h"
+#include "color.h"
 
 int main(int argc, char const *argv[])
 {
     init();
 
-    int i = 0, idx, now;
+    int i = 0, idx, now, counter = 0;;
     char temp[100];
-
+    struct t typing;
 
     mvprintw(2, 0, "> ");
     keypad(stdscr, TRUE);
 
-    while(1){
+    while(counter < 2){
 
         read_word();
 
@@ -28,7 +29,7 @@ int main(int argc, char const *argv[])
 
         while(idx < 8){
             
-            color_word(0, now, word[idx], WAIT);
+            color_word(0, now, word[idx], BG_WHITE);
 
             move(2, 2);
 
@@ -47,10 +48,14 @@ int main(int argc, char const *argv[])
             move(2, 2);
             clrtoeol();
 
-            if(!strcmp(temp, word[idx]))
-                color_word(0, now, word[idx], CORRECT);
-            else
-                color_word(0, now, word[idx], WRONG);
+            if(!strcmp(temp, word[idx])){
+                color_word(0, now, word[idx], BG_GREEN);
+                typing.correct++;
+            }
+            else{
+                color_word(0, now, word[idx], BG_RED);
+                typing.wrong++;
+            }
 
             now += strlen(word[idx]) + 1;
 
@@ -62,12 +67,21 @@ int main(int argc, char const *argv[])
             move(2, 0);
             
         }
-
+        
+        counter++;
         // cleanup();
         move(0, 0);
         clrtoeol();
 
     }
+    
+    clear();
+
+    // show a result;
+
+    result(typing.correct, typing.wrong);
+
+    getch();
 
 	refresh();
 	endwin();

@@ -1,0 +1,6 @@
+#define BG_GREEN COLOR_PAIR(1)
+#define BG_RED COLOR_PAIR(2)
+#define BG_WHITE COLOR_PAIR(3)
+#define GREEN COLOR_PAIR(4)
+#define RED COLOR_PAIR(5)
+#define WHITE COLOR_PAIR(6)
