@@ -29,7 +29,10 @@ int main(int argc, char const *argv[])
 
         while(idx < 8){
             
-            color_word(0, now, word[idx], BG_WHITE);
+            // color_word(0, now, word[idx], BG_WHITE);
+
+            color_word(0, now, BG_WHITE, "%s", word[idx]);
+
 
             move(2, 2);
 
@@ -49,11 +52,13 @@ int main(int argc, char const *argv[])
             clrtoeol();
 
             if(!strcmp(temp, word[idx])){
-                color_word(0, now, word[idx], BG_GREEN);
+                // color_word(0, now, word[idx], BG_GREEN);
+                color_word(0, now, BG_GREEN, "%s", word[idx]);
                 typing.correct++;
             }
             else{
-                color_word(0, now, word[idx], BG_RED);
+                // color_word(0, now, word[idx], BG_RED);
+                color_word(0, now, BG_RED, "%s", word[idx]);
                 typing.wrong++;
             }
 
@@ -79,7 +84,7 @@ int main(int argc, char const *argv[])
 
     // show a result;
 
-    result(typing.correct, typing.wrong);
+    // result(typing.correct, typing.wrong);
 
     getch();
 

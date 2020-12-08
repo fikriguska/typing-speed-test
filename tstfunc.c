@@ -53,9 +53,35 @@ void init(){
     read_word();
 }
 
-void color_word(int y, int x, char* s, int color){
+void color_word(int y, int x, int color, char *c , ... ){
+    va_list ap;
+    char *substr;
+    va_start(ap, c);
+    
+    move(x, y);
+
     attron(color);
-    mvprintw(y, x, "%s", s);        
+    while(*c){
+        if(*c == '%'){
+            switch(*c){
+                case 's':
+                    substr = va_arg(ap, char *);
+                    printw("%s", substr);
+                    break;
+                case 'd':
+                    substr = va_arg(ap, int);
+                    printw("%d", substr);
+                    break;
+                case 'c':
+                    substr = va_arg(ap, char);
+                    printw("%c", substr);
+                    break;
+            }
+            va_end(ap);
+        }
+        printw("%c", *s);
+
+    }
     attroff(color);
 }
 
@@ -77,11 +103,14 @@ void result(int correct, int wrong){
     mvprintw(0, 0, "+------------------------+");
 
     sprintf(statement, " correct words: %d", correct);
-    color_word(1, 0, statement, GREEN);
+    //color_word(1, 0, statement, GREEN);
+    color_word(0, now, BG_GREEN, statement, correct);
     sprintf(statement, " wrong words: %d", wrong);
-    color_word(2, 0, statement, RED);
+    //color_word(2, 0, statement, RED);
+    color_word(0, now, BG_RED, statement, wrong);
     sprintf(statement, " accuracy: %.2f%%", correct*1.0/(correct+wrong) * 100);
-    color_word(3, 0, statement, WHITE);
+    //color_word(3, 0, statement, WHITE);
+    color_word(0, now, BG_WHITE, statement, 2);
 
     mvprintw(4, 0, "+------------------------+");
 }
